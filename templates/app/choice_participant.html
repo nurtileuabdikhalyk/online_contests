@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<br><br>
+<br><br>
+<section class="section services" id="services">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="text-center mb-5">
+                    <h3 class="heading">{{ contest.title }}</h3>
+
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <form action="{% url 'vote' contest.slug %}" method="post">
+                    {% csrf_token %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Есімі</th>
+                            <th scope="col">Тегі</th>
+                            <th scope="col">Ұпай</th>
+                            <th scope="col">Жұмысы</th>
+                            {% if not contest.open_close %}
+                            <th scope="col">Дауыс беру</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for result in results %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ result.participant.first_name }}</td>
+                            <td>{{ result.participant.last_name }}</td>
+                            <td>
+                                {{ result.score }}
+                            </td>
+                            <td>
+                                {% if result.file %}
+                                <a href="{{ result.file.url }}">{{ result.file.name }}</a>
+                                {% else %}
+                                Тіркелмеген
+                                {% endif %}
+                            </td>
+                              {% if not contest.open_close %}
+                            <td><input type="radio" name="choice" class="form-check-input"
+
+                                       value="{{ result.id }}"/></td>
+                            {% endif %}
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if vote and not contest.open_close  %}
+                    <input type="submit" value="Дауыс беру" class="btn btn-success btn-lg btn-block mt-4"/>
+
+                    {% endif %}
+                    {% if vote and contest.open_close %}
+
+                    <h3 class="heading">Дауыс беру</h3>
+                    <select name="choice" class="form-control">
+                        {% for result in results %}
+                        <option value="{{ result.id }}">{{ result.participant }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <input type="number" name="score" value="0" max="10" min="0" class="form-control"/>
+                    <input type="submit" value="Таңдау" class="btn btn-success btn-lg btn-block mt-4"/>
+
+                    {% endif %}
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

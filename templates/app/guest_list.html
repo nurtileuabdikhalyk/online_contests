@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br><br>
+<br><br>
+<section class="section services" id="services">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Байқау аты</th>
+                        <th scope="col">Категория</th>
+                        <th scope="col">Байқау болған уақыт</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for contest in contests %}
+                    <tr>
+
+                        <th scope="row">{{ forloop.counter }}</th>
+                        {% if user.jury_set.all %}
+                        <td>{{ contest.title }}</td>
+                        <td>{{ contest.category.name }}</td>
+                        <td>{{ contest.date|date:'d-m-Y H:i' }}</td>
+                        <td><a class="btn btn-primary nav-btn"
+                               href="{% url 'choice_participant' contest.slug%}">Таңдау</a></td>
+                        {% else %}
+                        <td>{{ contest.title }}</td>
+                        <td>{{ contest.category.name }}</td>
+                        <td>{{ contest.date|date:'d-m-Y H:i' }}</td>
+                        <td><a class="btn btn-primary nav-btn"
+                               href="{% url 'choice_participant' contest.slug%}">Таңдау</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,350 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="71">
+
+<section class="section home home-1" id="home">
+    <div class="left-img">
+        <img src="{% static 'images/banner-shape.png' %}" alt="">
+    </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="home-heading">
+                    <h1 class="mb-3">ИНТЕРНЕТ БА<span class="home-text">ЙҚАУ САЙТЫ&nbsp;</span>
+
+                    </h1>
+                </div>
+
+                <p class="">Қоғамдағы білімді азаматтар мен оқушы жастардың мәртебесін көтеріп, оларды ынталандыру және
+                    бойларына патриоттық рухты сіңіру</p>
+                <div class="home-btn hstack gap-2 flex-column d-sm-block mb-5 mb-sm-0">
+                    {% if user.is_authenticated %}
+                    <a class="btn btn-primary me-1" href="{% url 'guest_list' %}">Дауыс беру</a>
+                    {% else %}
+
+                    <a class="btn btn-primary me-1" href="{% url 'account_login' %}">Дауыс беру</a>
+                    {% endif %}
+
+
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="">
+                    <img src="{% static 'images/home-1.png' %}" class="home-img" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="section services" id="services">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="text-center mb-5">
+                    <h3 class="heading">Неліктен біздің байқауларға қатысу туралы шешім қабылдағанда көңіліңіз
+                        қалмайды</h3>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="box">
+                            <div class="flex-shrink-0 my-3">
+                                <div class="avatar-sm align-items-center">
+                                    <div class="avatar-title">
+                                        <i class="mdi mdi-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4>Cіз кез-келген уақытта қатыса аласыз және тез арада диплом ала аласыз.</h4>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="box">
+                            <div class="flex-shrink-0 my-3">
+                                <div class="avatar-sm align-items-center">
+                                    <div class="avatar-title">
+                                        <i class="mdi mdi-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4>Байқауларға қатысу нәтижелері диплом алғаннан кейін бірден сайтта жарияланады.</h4>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="box">
+                            <div class="flex-shrink-0 my-3">
+                                <div class="avatar-sm align-items-center">
+                                    <div class="avatar-title">
+                                        <i class="mdi mdi-check"></i>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <h4>Сіздердің әрқайсыларыңызға ұсынылған номинациялар тізімінен өздеріңіз үшін қолайлы
+                                байқауды таба аласыздар.</h4>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="box">
+                            <div class="flex-shrink-0 my-3">
+                                <div class="avatar-sm align-items-center">
+                                    <div class="avatar-title">
+                                        <i class="mdi mdi-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4> Күн сайын жаңа байқаулар.</h4>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end services -->
+
+<!-- start about -->
+<section class="section about" id="teachers">
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-12">
+                <div class="text-center mb-5">
+                    <a href="{% url 'category_detail' 'teacher' %}" style="color:#252d31;"><h3 class="heading">
+                        Ұстаздар арасында байқау</h3></a>
+
+                </div>
+            </div>
+            {% for contest in teacher_contests %}
+
+            <div class="col-lg-4"><a style="color:#252d31;" href="{% url 'contest_detail' contest.slug %}">
+                <img src="{{ contest.image.url }}" width="300" height="200" alt="">
+                <h4>{{ contest.title }}</h4>
+                <br></a>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- end about -->
+
+<!-- start features -->
+<section class="section features" id="suret">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-center mb-5">
+                    <a href="{% url 'category_detail' 'suret-salu-baiqau' %}" style="color:#252d31;"><h3
+                            class="heading">
+                        Сурет салу байқауы</h3>
+                    </a>
+                </div>
+            </div>
+            {% for contest in suret %}
+            <div class="col-lg-4"><a style="color:#252d31;" href="{% url 'contest_detail' contest.slug %}">
+                <img src="{{ contest.image.url }}" width="300" height="200" alt="">
+                <h4>{{ contest.title }}</h4>
+                <br></a>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+<!-- end features -->
+
+
+<section class="section team" id="horse_racing">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="text-center mb-5">
+                    <a href="{% url 'category_detail' 'at-bjgesi' %}" style="color:#252d31;"><h3 class="heading mb-3">
+                        Ат бәйгесі </h3>
+                    </a>
+                </div>
+            </div>
+            {% for contest in horse_racing %}
+            <div class="col-lg-4"><a style="color:#252d31;" href="{% url 'contest_detail' contest.slug %}">
+                <img src="{{ contest.image.url }}" width="300" height="200" alt="">
+                <h4>{{ contest.title }}</h4>
+                <br></a>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+<section class="section team" id="mushaira">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="text-center mb-5">
+                    <a href="{% url 'category_detail' 'mshajra' %}" style="color:#252d31;"><h3 class="heading mb-3">
+                        Мүшәйра </h3>
+                    </a>
+                </div>
+            </div>
+            {% for contest in mushaira %}
+            <div class="col-lg-4"><a style="color:#252d31;" href="{% url 'contest_detail' contest.slug %}">
+                <img src="{{ contest.image.url }}" width="300" height="200" alt="">
+                <h4>{{ contest.title }}</h4>
+                <br></a>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+<section class="section services" >
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="text-center mb-5">
+                    <h3 class="heading">Демеуші болғыңыз келсе!!!</h3>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="box">
+                            <div class="flex-shrink-0 my-3">
+                                <div class="avatar-sm align-items-center">
+                                    <div class="avatar-title">
+                                        <i class="mdi mdi-numeric-0-box-multiple-outline"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4>Cчет номері: 4400 4302 2301 1310</h4>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="box">
+                            <div class="flex-shrink-0 my-3">
+                                <div class="avatar-sm align-items-center">
+                                    <div class="avatar-title">
+                                        <i class="mdi mdi-phone"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4>+7 747 133 73 37</h4>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- start contact -->
+<section class="section contact" id="contact">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="text-center mb-5">
+                    <h3 class="heading mb-3">Сұрақтарыңыз болса осында жазыңыз!!!</h3>
+                    <p class="text-muted mb-0">Төмендегі форманы толтырып бізге жіберіңіз</p>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <div class="row justify-content-around g-4">
+            <div class="col-lg-6">
+                <form method="post" onsubmit="return validateForm()" class="contact-form" name="myForm" id="myForm"
+                      action="{% url 'question' %}">
+                    {% csrf_token %}
+                    <span id="error-msg"></span>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="position-relative mb-3">
+                                <span class="input-group-text"><i class="mdi mdi-account-outline"></i></span>
+                                {{ form.name }}
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="position-relative mb-3">
+                                <span class="input-group-text"><i class="mdi mdi-phone"></i></span>
+                                {{ form.phone }}
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="position-relative mb-3">
+                                    <span class="input-group-text align-items-start"><i
+                                            class="mdi mdi-comment-text-outline"></i></span>
+                                {{ form.message }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="submit" id="submit" name="send" class="btn btn-primary"
+                                   value="Жіберу">
+                        </div>
+                    </div>
+                </form>
+                <!--end form-->
+            </div>
+            <!--end col-->
+            <div class="col-lg-4">
+                <div class="contact-details mb-4 mb-lg-0">
+                    <p class="mb-3"><i class="mdi mdi-email-outline align-middle text-muted fs-20 me-2"></i> <span
+                            class="fw-medium">baltabay_samal@live.kaznu.kz</span></p>
+                    <p class="mb-3"><i class="mdi mdi-web align-middle text-muted fs-20 me-2"></i> <span
+                            class="fw-medium">www.baltabay_samal.kz</span></p>
+                    <p class="mb-3"><i class="mdi mdi-phone align-middle text-muted fs-20 me-2"></i> <span
+                            class="fw-medium">+7 747 133 73 37</span></p>
+
+                </div>
+                <!--end contact-details-->
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+<!-- end contact -->
+
+
+<!--start back-to-top-->
+<button onclick="topFunction()" id="back-to-top">
+    <i class="mdi mdi-arrow-up"></i>
+</button>
+<!--end back-to-top-->
+
+<!--Custom js-->
+
+
+</body>
+{% endblock content %}
