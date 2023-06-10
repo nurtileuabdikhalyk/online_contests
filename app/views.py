@@ -44,7 +44,13 @@ def contest_detail(request, slug):
     contest = get_object_or_404(Contest, slug=slug)
     results = Result.objects.filter(contest=contest).order_by('-score')
     v = Vote.objects.filter(contest=contest).filter(user=request.user)
-
+    jury = True
+    if contest.open_close:
+        jury = False
+        for j in request.user.jury_set.all():
+            if j.contest == contest:
+                jury = True
+                break
     if not v:
         v = True
     else:
@@ -55,16 +61,11 @@ def contest_detail(request, slug):
     else:
         c = True
     question = Result.objects.filter(participant=request.user.participant).filter(contest=contest)
-    jury = False
-    for j in request.user.jury_set.all():
-        if j.contest == contest:
-            jury = True
-            break
 
     if not question:
         question = ['', ]
     context = {'title': contest.title, 'contest': contest, 'c': c, 'question': question[0], 'results': results,
-               'vote': v,'jury':jury}
+               'vote': v, 'jury': jury}
     return render(request, 'app/contest_detail.html', context)
 
 

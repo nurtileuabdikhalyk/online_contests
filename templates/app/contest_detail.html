@@ -55,7 +55,7 @@
                                 </a>
                             </div>
                             {% elif c %}
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 {% if question %}
                                 <a href="{% url 'contest_update' contest.slug question.id %}"
                                    class="btn btn-primary nav-btn">
@@ -73,7 +73,7 @@
 
                             </div>
                             {% endif %}
-                            <div class="col-lg-2">
+                            <div class="col-lg-6">
                                 <a href="{% url 'results' contest.slug %}" class="btn btn-primary nav-btn">
                                     Нәтижелер
                                 </a></div>
@@ -86,7 +86,7 @@
         </div>
     </div>
 </section>
-{% if c %}
+{% if jury and c %}
 <section class="section services" id="services">
     <div class="container">
         <div class="row g-4">
@@ -103,7 +103,7 @@
                             <th scope="col">Тегі</th>
                             <th scope="col">Ұпай</th>
                             <th scope="col">Жұмысы</th>
-                            {% if not jury %}
+                            {% if not contest.open_close %}
                             <th scope="col">Дауыс беру</th>
                             {% endif %}
                         </tr>
@@ -124,7 +124,7 @@
                                 Тіркелмеген
                                 {% endif %}
                             </td>
-                             {% if not jury %}
+                             {% if not contest.open_close %}
                             <td><input type="radio" name="choice" class="form-check-input"
 
                                        value="{{ result.id }}"/></td>
@@ -136,11 +136,11 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                    {% if vote and not jury %}
+                    {% if vote and not contest.open_close  %}
                     <input type="submit" value="Дауыс беру" class="btn btn-success btn-lg btn-block mt-4"/>
 
                     {% endif %}
-                    {% if vote and jury %}
+                    {% if vote and contest.open_close %}
 
                     <h3 class="heading">Дауыс беру</h3>
                     <select name="choice" class="form-control">
